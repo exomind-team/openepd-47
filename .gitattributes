@@ -1,0 +1,15 @@
+* text=auto
+
+*.c text eol=lf
+*.h text eol=lf
+*.S text eol=lf
+*.cmake text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.csv text eol=lf
+*.ps1 text eol=crlf
+
+*.pdf binary
+*.dwg binary
+*.png binary

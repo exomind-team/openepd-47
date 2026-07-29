@@ -1,0 +1,29 @@
+# ESP-IDF
+build/
+sdkconfig
+sdkconfig.old
+managed_components/
+
+# Astro / Bun
+node_modules/
+website/dist/
+website/.astro/
+
+# Local secrets
+.env
+.env.*
+wifi_config.local.h
+
+# Editor and generated files
+.cache/
+.vscode/
+*.bak
+*.tmp
+*.zip
+
+# Local tools
+.tools/
+
+# OS files
+Thumbs.db
+.DS_Store

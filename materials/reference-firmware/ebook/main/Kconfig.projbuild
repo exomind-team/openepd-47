@@ -1,0 +1,14 @@
+menu "E-Book Demo Configuration"
+
+    config EBOOK_WIFI_SSID
+        string "Demo Wi-Fi SSID (overrides wifi_config.h if set)"
+        default ""
+        help
+            Leave empty to use DEMO_WIFI_SSID in main/common/wifi_config.h
+
+    config EBOOK_WIFI_PASSWORD
+        string "Demo Wi-Fi Password"
+        default ""
+        depends on EBOOK_WIFI_SSID != ""
+
+endmenu

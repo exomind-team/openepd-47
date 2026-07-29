@@ -1,0 +1,7 @@
+# 8MB Flash 布局（文件名保留历史命名）
+# factory 3MB（当前固件约 2.4MB）+ spiffs 约 4.9MB
+# Name,   Type, SubType, Offset,  Size,     Flags
+nvs,      data, nvs,     0x9000,  0x5000,
+phy_init, data, phy,     0xE000,  0x1000,
+factory,  app,  factory, 0x10000, 0x300000,
+spiffs,   data, spiffs,          , 0x4F0000,

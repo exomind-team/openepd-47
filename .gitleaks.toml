@@ -1,0 +1,16 @@
+title = "OpenEPD 4.7 secret scanning configuration"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated SHA-256 manifests contain high-entropy integrity hashes, not credentials"
+paths = [
+  '''(^|/)materials/(source-inventory|import-allowlist|excluded)\.csv$''',
+]
+
+[[allowlists]]
+description = "Local scanner binaries and bundled documentation are ignored by Git"
+paths = [
+  '''(^|/)\.tools/''',
+]

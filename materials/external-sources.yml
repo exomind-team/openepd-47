@@ -1,0 +1,24 @@
+sources:
+  - id: gt911-driver
+    title: Espressif ESP LCD Touch GT911
+    type: dependency
+    url: https://components.espressif.com/components/espressif/esp_lcd_touch_gt911
+    sourceUrl: https://github.com/espressif/esp-bsp/tree/master/components/lcd_touch/esp_lcd_touch_gt911
+    license: Apache-2.0
+    redistribution: use-package-registry
+    notes: "正式驱动必须使用该官方组件；触摸芯片不是 FT5446U。"
+
+  - id: gt911-datasheet
+    title: GT911 Data Sheet
+    type: external-document
+    url: https://www.fortec-integrated.de/fileadmin/pdf/produkte/Touchcontroller/DDGroup/GT911_Datasheet.pdf
+    redistribution: not-mirrored
+    notes: "只标注公开来源，未确认再分发许可前不复制 PDF。"
+
+  - id: epdiy
+    title: EPDiy
+    type: upstream-source
+    url: https://github.com/vroland/epdiy
+    commit: 8781397a7154a19fc1b458dbef2aa465ab03cb10
+    license: LGPL-3.0
+    redistribution: referenced-and-vendored-in-reference-firmware
