@@ -25,6 +25,7 @@ wifi_config.local.h
 
 # Local tools
 .tools/
+.superpowers/
 
 # OS files
 Thumbs.db
