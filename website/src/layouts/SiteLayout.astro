@@ -1,0 +1,86 @@
+---
+import { Github, Menu } from 'lucide-astro';
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description: string;
+  currentPath?: string;
+}
+
+const { title, description, currentPath = '/' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = (value: string) => `${base}${value}`;
+
+const navItems = [
+  { label: '文档', href: path('/quick-start/') },
+  { label: '资料', href: path('/resources/') },
+  { label: '项目', href: path('/projects/') },
+];
+---
+
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#10231b" />
+    <link rel="icon" type="image/svg+xml" href={path('/favicon.svg')} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <header class="site-header">
+      <a class="brand" href={path('/')} aria-label="OpenEPD 4.7 首页">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span>
+          <strong>OpenEPD</strong>
+          <small>4.7 / 684 × 1216</small>
+        </span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="主导航">
+        {
+          navItems.map((item) => (
+            <a href={item.href} aria-current={currentPath.startsWith(item.href.replace(base, '')) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+        <a class="github-link" href="https://github.com/exomind-team/openepd-47">
+          <Github size={17} aria-hidden="true" />
+          GitHub
+        </a>
+      </nav>
+
+      <details class="mobile-nav">
+        <summary aria-label="打开导航">
+          <Menu size={22} aria-hidden="true" />
+        </summary>
+        <nav aria-label="移动端导航">
+          {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href="https://github.com/exomind-team/openepd-47">GitHub</a>
+        </nav>
+      </details>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <span class="footer-index">OPEN / 47</span>
+        <p>让一块屏幕拥有可追踪、可复现、可继续生长的开放入口。</p>
+      </div>
+      <div class="footer-links">
+        <a href={path('/quick-start/')}>开发文档</a>
+        <a href={path('/resources/')}>资料来源</a>
+        <a href="https://github.com/exomind-team/openepd-47/blob/main/LICENSE">Apache-2.0</a>
+      </div>
+    </footer>
+  </body>
+</html>

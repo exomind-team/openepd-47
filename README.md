@@ -4,7 +4,9 @@
 
 Open-source resources, drivers, and a community showcase for the 4.7-inch 684×1216 monochrome e-paper display.
 
-> 当前状态 / Current status：**资料与计划基线已建立，驱动和网站尚未开始实施。**
+> 当前状态 / Current status：**资料基线与网站 MVP 已建立；驱动仍处于参考代码整理阶段。**
+
+网站 / Website：<https://exomind-team.github.io/openepd-47/>
 
 ## 仓库目标
 
@@ -15,10 +17,11 @@ Open-source resources, drivers, and a community showcase for the 4.7-inch 684×1
 
 ## 从这里开始
 
-1. 阅读 [当前交接状态](docs/HANDOFF.md)。
-2. 阅读 [设计说明](docs/design/2026-07-29-openepd-47-design.md)。
-3. 从 [总实施路线图](docs/plans/2026-07-29-openepd-47-implementation-plan.md) 选择下一阶段。
-4. 查阅 [资料目录与来源说明](materials/README.md)。
+1. 浏览 [在线网站](https://exomind-team.github.io/openepd-47/)。
+2. 阅读 [当前交接状态](docs/HANDOFF.md)。
+3. 阅读 [设计说明](docs/design/2026-07-29-openepd-47-design.md)。
+4. 从 [总实施路线图](docs/plans/2026-07-29-openepd-47-implementation-plan.md) 选择下一阶段。
+5. 查阅 [资料目录与来源说明](materials/README.md)。
 
 ## 已核实硬件
 

@@ -1,0 +1,7 @@
+:root {
+  --sl-color-accent-low: #d8eadf;
+  --sl-color-accent: #176b4d;
+  --sl-color-accent-high: #0c3d2b;
+  --sl-font: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --sl-font-mono: "IBM Plex Mono", "Cascadia Mono", monospace;
+}
