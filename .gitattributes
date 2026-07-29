@@ -13,3 +13,6 @@
 *.pdf binary
 *.dwg binary
 *.png binary
+
+# Preserve vendor reference snapshots byte-for-byte for provenance hashes.
+materials/reference-firmware/** -text !eol
