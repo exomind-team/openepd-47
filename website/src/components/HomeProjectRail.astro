@@ -1,0 +1,77 @@
+---
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-astro';
+import { projects } from '../data/projects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const allProjects = `${base}/projects/`;
+---
+
+<section class="home-project-rail shell" aria-label="首页项目展示" data-project-rail>
+  <header class="home-project-rail__header">
+    <div>
+      <span>PROJECTS / 横向浏览</span>
+      <h2>项目展示</h2>
+    </div>
+    <div class="home-project-rail__actions">
+      <a href={allProjects}>
+        查看全部
+        <ArrowUpRight size={15} aria-hidden="true" />
+      </a>
+      <button type="button" aria-label="向左浏览项目" data-project-prev>
+        <ChevronLeft size={18} aria-hidden="true" />
+      </button>
+      <button type="button" aria-label="向右浏览项目" data-project-next>
+        <ChevronRight size={18} aria-hidden="true" />
+      </button>
+    </div>
+  </header>
+
+  <div
+    class="home-project-track"
+    data-testid="home-project-track"
+    data-project-track
+    tabindex="0"
+  >
+    {
+      projects.map((project) => (
+        <a
+          class="home-project-card"
+          data-testid="home-project-card"
+          href={project.repository}
+          style={`--project-accent:${project.accent}`}
+        >
+          <span>{project.categoryLabel} · {project.status}</span>
+          <strong>{project.title}</strong>
+          <small>{project.hardware} · {project.framework}</small>
+          <ArrowUpRight size={17} aria-hidden="true" />
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-project-rail]').forEach((rail) => {
+    const track = rail.querySelector<HTMLElement>('[data-project-track]');
+    const previous = rail.querySelector<HTMLButtonElement>('[data-project-prev]');
+    const next = rail.querySelector<HTMLButtonElement>('[data-project-next]');
+    if (!track || !previous || !next) return;
+
+    const updateControls = () => {
+      previous.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    };
+
+    const move = (direction: number) => {
+      const card = track.querySelector<HTMLElement>('[data-testid="home-project-card"]');
+      const distance = card?.offsetWidth ?? track.clientWidth * 0.8;
+      track.scrollBy({ left: direction * distance, behavior: 'smooth' });
+    };
+
+    previous.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+    track.addEventListener('scroll', updateControls, { passive: true });
+    window.addEventListener('resize', updateControls, { passive: true });
+    updateControls();
+  });
+</script>
