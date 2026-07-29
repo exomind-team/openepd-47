@@ -1,0 +1,46 @@
+name: Website CI / 网站检查
+
+on:
+  pull_request:
+    paths:
+      - "website/**"
+      - ".github/workflows/site-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Check, test and build / 检查、测试与构建
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+
+    steps:
+      - name: Checkout / 检出代码
+        uses: actions/checkout@v7
+
+      - name: Set up Bun / 配置 Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.8
+
+      - name: Install dependencies / 安装依赖
+        run: bun install --frozen-lockfile
+
+      - name: Install Chromium / 安装浏览器
+        run: bunx playwright install --with-deps chromium
+
+      - name: Validate content / 校验内容
+        run: bun run check
+
+      - name: Run unit tests / 运行单元测试
+        run: bun run test:unit
+
+      - name: Run browser tests / 运行浏览器测试
+        run: bun run test:e2e
+
+      - name: Build static site / 构建静态站点
+        run: bun run build
