@@ -8,6 +8,8 @@
 
 **Tech Stack:** Astro、Starlight、TypeScript、Bun、Zod、Playwright、axe。
 
+**实施状态：** 网站 MVP 已完成；GitHub Pages 工作流已建立，等待主分支部署验收。
+
 ---
 
 ## 前置条件
@@ -15,7 +17,7 @@
 - [资料治理与仓库基础计划](./2026-07-29-openepd-47-foundation-plan.md) 已完成。
 - 驱动计划可并行执行；网站的驱动文档发布前必须以实际 API 和构建结果复核。
 
-## Task 1：初始化 Starlight 与平衡型首页
+## Task 1：初始化 Starlight 与平衡型首页（已完成）
 
 **Files:**
 
@@ -61,7 +63,7 @@
   git -C 'D:\project\openepd-47' commit -m "feat(site): scaffold balanced documentation portal"
   ```
 
-## Task 2：建立资料 Schema 与下载中心
+## Task 2：建立资料 Schema 与下载中心（已完成）
 
 **Files:**
 
@@ -106,7 +108,7 @@
   git -C 'D:\project\openepd-47' commit -m "feat(site): add traceable resource center"
   ```
 
-## Task 3：补齐快速开始、硬件和驱动文档
+## Task 3：补齐快速开始、硬件和驱动文档（已完成）
 
 **Files:**
 
@@ -149,7 +151,7 @@
   git -C 'D:\project\openepd-47' commit -m "docs: add hardware and driver guides"
   ```
 
-## Task 4：建立项目展示与 GitHub 投稿
+## Task 4：建立项目展示与 GitHub 投稿（已完成）
 
 **Files:**
 

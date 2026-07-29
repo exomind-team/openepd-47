@@ -1,0 +1,57 @@
+resources:
+  - id: display-e0470a01-af-s
+    title: E0470A01-AF-S 显示屏规格书
+    category: display
+    hardwareRevision: E0470A01-AF-S
+    sourceType: vendor-authorized
+    sourceUrl: ""
+    redistribution: authorized
+    localPath: /resources/vendor/display/E0470A01-AF-S-specification.pdf
+    sha256: 70e457f990c3f04f20e6bad19b65bd8dbd096676258b3a974a642172f756f27f
+    bytes: 999257
+    notes: 4.7 英寸、684×1216、黑白电子纸规格书
+
+  - id: mechanical-e0470a01-pdf
+    title: E0470A01-AF-CF(A) 结构与触摸图
+    category: mechanical
+    hardwareRevision: E0470A01-AF-CF(A)-260713-1
+    sourceType: vendor-authorized
+    sourceUrl: ""
+    redistribution: authorized
+    localPath: /resources/vendor/mechanical/E0470A01-AF-CF-A-260713-1.pdf
+    sha256: 4f447f589b8f39e11dcb720af429c6e245b1e864e7fcb1768ff6a8ef4ced17a1
+    bytes: 167067
+    notes: PDF 版本；标注 GT911 与 6 针触摸 FPC
+
+  - id: mechanical-e0470a01-dwg
+    title: E0470A01-AF-CF(A) 结构图源文件
+    category: mechanical
+    hardwareRevision: E0470A01-AF-CF(A)-260713-1
+    sourceType: vendor-authorized
+    sourceUrl: ""
+    redistribution: authorized
+    localPath: /resources/vendor/mechanical/E0470A01-AF-CF-A-260713-1.dwg
+    sha256: bbc464f67f10270dfa7ac8b0f3c02448428fa82743555f0edad71a75bddc2fbf
+    bytes: 257088
+    notes: DWG 可编辑结构图源文件
+
+  - id: power-tps65185
+    title: ESP32-S3 + TPS65185 电源资料
+    category: power
+    hardwareRevision: ESP32S3-TPS65185
+    sourceType: vendor-authorized
+    sourceUrl: ""
+    redistribution: authorized
+    localPath: /resources/vendor/power/ESP32S3-TPS65185.pdf
+    sha256: d09181da8c066771343fe100a4527bc92e0fd2cf2723fc51b65a2ea9b6b51d09
+    bytes: 528591
+    notes: 电子纸电源管理与 ESP32-S3 连接参考
+
+  - id: gt911-datasheet
+    title: GT911 Data Sheet（数据手册）
+    category: touch
+    hardwareRevision: GT911
+    sourceType: external-link
+    sourceUrl: https://www.fortec-integrated.de/fileadmin/pdf/produkte/Touchcontroller/DDGroup/GT911_Datasheet.pdf
+    redistribution: not-mirrored
+    notes: 使用乐鑫官方驱动组件；仓库不镜像该 PDF

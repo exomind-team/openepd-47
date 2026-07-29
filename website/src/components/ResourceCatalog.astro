@@ -1,0 +1,215 @@
+---
+import { FileDown, FileText, Fingerprint, Link2, Ruler, ShieldCheck, Zap } from 'lucide-astro';
+import { parse } from 'yaml';
+import resourcesYaml from '../data/resources.yml?raw';
+
+interface Resource {
+  id: string;
+  title: string;
+  category: 'display' | 'mechanical' | 'power' | 'touch';
+  hardwareRevision: string;
+  sourceType: 'vendor-authorized' | 'external-link';
+  sourceUrl?: string;
+  redistribution: 'authorized' | 'not-mirrored';
+  localPath?: string;
+  sha256?: string;
+  bytes?: number;
+  notes: string;
+}
+
+const document = parse(resourcesYaml) as { resources: Resource[] };
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const iconMap = {
+  display: FileText,
+  mechanical: Ruler,
+  power: Zap,
+  touch: Fingerprint,
+};
+const labels = {
+  display: '显示',
+  mechanical: '结构',
+  power: '电源',
+  touch: '触摸',
+};
+const formatBytes = (bytes?: number) => {
+  if (!bytes) return 'EXTERNAL';
+  return bytes >= 1024 * 1024
+    ? `${(bytes / 1024 / 1024).toFixed(2)} MB`
+    : `${Math.round(bytes / 1024)} KB`;
+};
+---
+
+<div class="resource-catalog">
+  {
+    document.resources.map((resource) => {
+      const Icon = iconMap[resource.category];
+      const href =
+        resource.sourceType === 'external-link'
+          ? resource.sourceUrl
+          : `${base}${resource.localPath}`;
+
+      return (
+        <article class="resource-item" data-testid="resource-item">
+          <div class="resource-icon"><Icon size={23} aria-hidden="true" /></div>
+          <div class="resource-main">
+            <div class="resource-labels">
+              <span>{labels[resource.category]}</span>
+              <span>{resource.sourceType === 'external-link' ? '外部来源' : '已授权镜像'}</span>
+            </div>
+            <h2>{resource.title}</h2>
+            <p>{resource.notes}</p>
+            <dl>
+              <div><dt>版本</dt><dd>{resource.hardwareRevision}</dd></div>
+              <div><dt>大小</dt><dd>{formatBytes(resource.bytes)}</dd></div>
+            </dl>
+            {resource.sha256 && (
+              <code title={resource.sha256}>SHA-256 · {resource.sha256.slice(0, 16)}…</code>
+            )}
+          </div>
+          <div class="resource-action">
+            <span>
+              {resource.redistribution === 'authorized' ? (
+                <ShieldCheck size={16} aria-hidden="true" />
+              ) : (
+                <Link2 size={16} aria-hidden="true" />
+              )}
+              {resource.redistribution === 'authorized' ? '可在本仓库下载' : '未在仓库镜像'}
+            </span>
+            <a href={href} target={resource.sourceType === 'external-link' ? '_blank' : undefined}>
+              {resource.sourceType === 'external-link' ? '查看外部来源' : '仓库下载'}
+              <FileDown size={17} aria-hidden="true" />
+            </a>
+          </div>
+        </article>
+      );
+    })
+  }
+</div>
+
+<style>
+  .resource-catalog {
+    display: grid;
+    margin-top: 2rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+
+  .resource-item {
+    display: grid;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--sl-color-gray-5);
+    grid-template-columns: 52px minmax(0, 1fr) minmax(170px, 0.34fr);
+    gap: 1rem 1.4rem;
+  }
+
+  .resource-icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid currentColor;
+    color: var(--sl-color-accent);
+  }
+
+  .resource-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .resource-labels span {
+    padding: 0.16rem 0.38rem;
+    color: var(--sl-color-gray-2);
+    background: var(--sl-color-gray-6);
+    font-family: var(--sl-font-mono);
+    font-size: 0.66rem;
+  }
+
+  .resource-main h2 {
+    margin: 0.65rem 0 0;
+    font-size: 1.16rem;
+  }
+
+  .resource-main p {
+    margin: 0.55rem 0 0;
+    color: var(--sl-color-gray-2);
+    font-size: 0.88rem;
+  }
+
+  .resource-main dl {
+    display: flex;
+    margin: 0.8rem 0 0;
+    flex-wrap: wrap;
+    gap: 1.3rem;
+  }
+
+  .resource-main dl div {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .resource-main dt {
+    color: var(--sl-color-gray-3);
+  }
+
+  .resource-main dd {
+    margin: 0;
+    font-family: var(--sl-font-mono);
+  }
+
+  .resource-main code {
+    display: inline-block;
+    overflow: hidden;
+    max-width: 100%;
+    margin-top: 0.75rem;
+    color: var(--sl-color-gray-2);
+    background: transparent;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .resource-action {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .resource-action > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--sl-color-gray-3);
+    font-size: 0.74rem;
+  }
+
+  .resource-action a {
+    display: inline-flex;
+    min-height: 42px;
+    padding: 0.65rem 0.8rem;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid currentColor;
+    color: var(--sl-color-accent-high);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .resource-action a:hover,
+  .resource-action a:focus-visible {
+    color: var(--sl-color-white);
+    background: var(--sl-color-accent);
+  }
+
+  @media (max-width: 680px) {
+    .resource-item {
+      grid-template-columns: 44px minmax(0, 1fr);
+    }
+
+    .resource-action {
+      grid-column: 2;
+      align-items: flex-start;
+    }
+  }
+</style>

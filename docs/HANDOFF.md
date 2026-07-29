@@ -12,14 +12,17 @@
 - 导入清理后的电子书参考固件，替换演示 Wi‑Fi 凭据。
 - 保存完整设计说明、总路线图和四份子计划。
 - 保存 EPDiy 的 LGPL-3.0 许可证和精确上游提交信息。
+- 建立 Astro + Starlight 网站：首页、资料中心、硬件/驱动文档和项目展示均已实现。
+- 建立 5 项资料 Schema 与 SHA-256 校验，GT911 数据手册保持外链并标注来源。
+- 建立 GitHub Issue Form 项目投稿、网站 CI 与 GitHub Pages 部署工作流。
+- 网站生产地址设为 `https://exomind-team.github.io/openepd-47/`。
 
 ## 尚未完成
 
 - 没有实现 `driver/components/openepd47`。
 - 没有接入 GT911 官方组件。
 - 没有验证现有参考固件能否在 ESP-IDF 5.5.4 干净构建。
-- 没有初始化 Astro/Starlight 网站。
-- 没有建立 GitHub Actions、Pages 或 Release。
+- 没有建立 GitHub Release 自动化。
 - 没有进行真实硬件冒烟测试。
 
 ## 推荐下一步
@@ -29,10 +32,12 @@
 1. `docs/plans/2026-07-29-openepd-47-driver-plan.md`
 2. Task 1：建立最小板级组件和失败基线。
 
-网站可在驱动 Task 1 稳定后并行开始：
+网站 MVP 已完成，后续内容更新应同步维护：
 
-1. `docs/plans/2026-07-29-openepd-47-website-plan.md`
-2. Task 1：初始化 Starlight 与平衡型首页。
+1. `website/src/content/docs/`：开发文档。
+2. `website/src/data/resources.yml`：资料来源、授权与哈希。
+3. `website/src/data/projects.ts`：社区项目展示。
+4. 修改后运行 `bun run check && bun run test:unit && bun run test:e2e && bun run build`。
 
 ## 关键提醒
 

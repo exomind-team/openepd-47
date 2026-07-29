@@ -1,0 +1,76 @@
+name: Project submission / 项目展示申请
+description: Submit an open-source e-paper project for the OpenEPD showcase / 提交电子纸开源项目
+title: "[Project] "
+labels:
+  - project-submission
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你分享项目。请填写可公开核验的信息；维护者确认后会将项目加入网站。
+
+  - type: input
+    id: project-name
+    attributes:
+      label: Project name / 项目名称
+      placeholder: My E-paper Reader
+    validations:
+      required: true
+
+  - type: input
+    id: repository
+    attributes:
+      label: Repository URL / 仓库地址
+      placeholder: https://github.com/owner/repository
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary / 项目简介
+      description: 请用 2–4 句话说明项目用途和当前状态。
+    validations:
+      required: true
+
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware / 硬件
+      description: 主控、屏幕型号与触摸控制器（如适用）。
+    validations:
+      required: true
+
+  - type: input
+    id: framework
+    attributes:
+      label: Framework / 开发框架
+      placeholder: ESP-IDF, Arduino, Zephyr…
+    validations:
+      required: true
+
+  - type: input
+    id: license
+    attributes:
+      label: License / 开源许可
+      placeholder: Apache-2.0
+    validations:
+      required: true
+
+  - type: input
+    id: cover
+    attributes:
+      label: Cover image URL / 封面图片地址
+      description: 建议提供仓库内的横向项目截图。
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation / 确认
+      options:
+        - label: 项目仓库与图片允许在 OpenEPD 网站中公开展示。
+          required: true
+        - label: 提交内容不包含密钥、个人隐私或未经授权的第三方材料。
+          required: true

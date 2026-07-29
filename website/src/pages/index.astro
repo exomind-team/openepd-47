@@ -1,0 +1,224 @@
+---
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  Boxes,
+  CircuitBoard,
+  Download,
+  FileStack,
+  Fingerprint,
+  FolderGit2,
+  GalleryHorizontalEnd,
+  GitFork,
+  Hand,
+  ShieldCheck,
+  Zap,
+} from 'lucide-astro';
+import ScreenSchematic from '../components/ScreenSchematic.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = (value: string) => `${base}${value}`;
+
+const entryPoints = [
+  {
+    index: '01',
+    title: '开始开发',
+    description: '环境、接线与最小点屏路径。先理解现在有什么，再写下一行代码。',
+    href: path('/quick-start/'),
+    icon: CircuitBoard,
+  },
+  {
+    index: '02',
+    title: '浏览资料',
+    description: '规格书、结构图、供电资料与来源校验集中浏览和下载。',
+    href: path('/resources/'),
+    icon: FileStack,
+  },
+  {
+    index: '03',
+    title: '项目展示',
+    description: '查看社区如何使用同类屏幕，并通过 GitHub 提交你的作品。',
+    href: path('/projects/'),
+    icon: GalleryHorizontalEnd,
+  },
+];
+
+const resources = [
+  {
+    type: 'DISPLAY',
+    title: 'E0470A01-AF-S 规格书',
+    note: '4.7" · 684 × 1216 · B/W',
+    href: path('/resources/'),
+  },
+  {
+    type: 'TOUCH',
+    title: 'GT911 触摸资料',
+    note: '官方组件 · I²C · 5-point',
+    href: path('/hardware/gt911/'),
+  },
+  {
+    type: 'POWER',
+    title: 'TPS65185 电源资料',
+    note: '电源时序 · 状态检查',
+    href: path('/hardware/power/'),
+  },
+];
+---
+
+<SiteLayout
+  title="OpenEPD 4.7 — 电子纸开放资料与开发门户"
+  description="4.7 英寸 684×1216 电子纸的开放资料、ESP-IDF 驱动计划与社区项目展示。"
+>
+  <section class="hero shell">
+    <div class="hero-copy reveal">
+      <p class="eyebrow"><span>OPEN HARDWARE</span> / DOCUMENTED IN PUBLIC</p>
+      <h1><span>OpenEPD 4.7</span>一块屏幕，<br />一套持续生长的开放资料。</h1>
+      <p class="hero-lede">
+        为 684×1216 黑白电子纸建立一个可信的起点：
+        资料可追踪、驱动可复现、作品可被看见。
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href={path('/quick-start/')}>
+          开始开发
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+        <a class="button button-secondary" href={path('/resources/')}>
+          浏览资料
+          <Download size={17} aria-hidden="true" />
+        </a>
+        <a class="text-link" href={path('/projects/')}>
+          项目展示
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
+      </div>
+      <dl class="hero-specs" aria-label="核心规格">
+        <div><dt>尺寸</dt><dd>4.7"</dd></div>
+        <div><dt>像素</dt><dd>684 × 1216</dd></div>
+        <div><dt>触摸</dt><dd>GT911</dd></div>
+        <div><dt>主控</dt><dd>ESP32-S3</dd></div>
+      </dl>
+    </div>
+    <div class="hero-visual reveal reveal-delay">
+      <ScreenSchematic />
+      <p class="visual-note"><span>01</span> 按真实硬件资料建模，而不是从错误型号开始。</p>
+    </div>
+  </section>
+
+  <section class="entry-section shell" aria-labelledby="entry-heading">
+    <div class="section-heading">
+      <p class="eyebrow">THREE WAYS IN</p>
+      <h2 id="entry-heading">从你现在需要的地方进入</h2>
+      <p>资料、代码和社区不再分散在三个孤岛。</p>
+    </div>
+    <div class="entry-grid">
+      {
+        entryPoints.map(({ index, title, description, href, icon: Icon }) => (
+          <a class="entry-card" href={href}>
+            <span class="card-index">{index}</span>
+            <span class="icon-box"><Icon size={25} aria-hidden="true" /></span>
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <span class="card-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="manifest-section">
+    <div class="shell manifest-grid">
+      <div class="manifest-copy">
+        <p class="eyebrow">CURRENT SNAPSHOT / 2026.07</p>
+        <h2>不是“文件堆”，<br />是带出处的技术档案。</h2>
+        <p>
+          每份公开资料都记录型号、来源、再分发状态和 SHA‑256。
+          错误的 FT5446U 文档、缓存、备份和演示凭据没有进入仓库。
+        </p>
+        <div class="trust-row">
+          <span><Fingerprint size={18} aria-hidden="true" />108 项哈希可核验</span>
+          <span><ShieldCheck size={18} aria-hidden="true" />公开边界已标注</span>
+        </div>
+        <a class="inline-action" href={path('/resources/')}>
+          打开资料中心 <ArrowRight size={17} aria-hidden="true" />
+        </a>
+      </div>
+
+      <div class="resource-ledger" aria-label="精选资料">
+        {
+          resources.map((resource, index) => (
+            <a href={resource.href}>
+              <span class="ledger-number">{String(index + 1).padStart(2, '0')}</span>
+              <span>
+                <small>{resource.type}</small>
+                <strong>{resource.title}</strong>
+                <em>{resource.note}</em>
+              </span>
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="journey-section shell" aria-labelledby="journey-heading">
+    <div class="section-heading compact">
+      <p class="eyebrow">DEVELOPER JOURNEY</p>
+      <h2 id="journey-heading">从第一帧，到第一个公开作品</h2>
+    </div>
+    <ol class="journey-track">
+      <li>
+        <span>01</span>
+        <BookOpen size={22} aria-hidden="true" />
+        <strong>读懂硬件</strong>
+        <p>屏幕、触摸、电源和 FPC 接口。</p>
+      </li>
+      <li>
+        <span>02</span>
+        <Zap size={22} aria-hidden="true" />
+        <strong>点亮屏幕</strong>
+        <p>复现最小工程，再增加复杂度。</p>
+      </li>
+      <li>
+        <span>03</span>
+        <Hand size={22} aria-hidden="true" />
+        <strong>接入触摸</strong>
+        <p>使用 GT911 官方组件和板级适配。</p>
+      </li>
+      <li>
+        <span>04</span>
+        <GitFork size={22} aria-hidden="true" />
+        <strong>分享作品</strong>
+        <p>通过 Issue 与 PR 加入展示墙。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="showcase-section shell">
+    <div class="showcase-panel">
+      <div class="showcase-copy">
+        <p class="eyebrow">COMMUNITY DISPLAY</p>
+        <h2>让同一块屏幕，<br />长出不同的用途。</h2>
+        <p>电子书、天气站、日历、信息面板、桌面伴侣——项目展示区将把真实构建经验带回文档。</p>
+        <a class="button button-light" href={path('/projects/')}>
+          浏览项目展示
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+      </div>
+      <div class="project-placeholder" aria-label="社区项目占位示意">
+        <div class="project-screen">
+          <span>COMMUNITY / 001</span>
+          <Boxes size={46} aria-hidden="true" />
+          <strong>你的项目<br />可以出现在这里</strong>
+          <small>SUBMIT VIA GITHUB</small>
+        </div>
+        <div class="project-meta">
+          <FolderGit2 size={18} aria-hidden="true" />
+          <span>开放投稿 · 来源透明 · 可复现优先</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

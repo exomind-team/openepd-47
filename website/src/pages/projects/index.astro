@@ -1,0 +1,161 @@
+---
+import {
+  ArrowUpRight,
+  BookOpenText,
+  Filter,
+  Gauge,
+  GitPullRequestArrow,
+  Layers3,
+} from 'lucide-astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { projects } from '../../data/projects';
+import '../../styles/projects.css';
+
+const submissionUrl =
+  'https://github.com/exomind-team/openepd-47/issues/new?template=project-submission.yml';
+
+const filters = [
+  { value: 'all', label: '全部项目' },
+  { value: 'reference', label: '参考工程' },
+  { value: 'reader', label: '阅读终端' },
+  { value: 'dashboard', label: '信息面板' },
+];
+
+const icons = {
+  reference: Layers3,
+  reader: BookOpenText,
+  dashboard: Gauge,
+};
+---
+
+<SiteLayout
+  title="项目展示 · OpenEPD 4.7"
+  description="发现和提交基于 4.7 英寸电子纸屏的开源项目。"
+  currentPath="/projects/"
+>
+  <section class="projects-hero">
+    <div class="projects-kicker">
+      <span>COMMUNITY / 社区</span>
+      <span>CURATED ON GITHUB</span>
+    </div>
+    <div class="projects-heading">
+      <div>
+        <p class="eyebrow">OPEN HARDWARE, SHARED OUTCOMES</p>
+        <h1>项目展示</h1>
+      </div>
+      <p>
+        收集使用 OpenEPD 4.7 或同类电子纸屏的开放项目。每个条目都保留仓库、硬件、
+        框架和许可信息，让灵感可以被复现。
+      </p>
+    </div>
+  </section>
+
+  <section class="project-browser" aria-labelledby="project-list-title">
+    <div class="project-toolbar">
+      <div>
+        <Filter size={17} aria-hidden="true" />
+        <h2 id="project-list-title">浏览项目</h2>
+      </div>
+      <div class="project-filters" role="group" aria-label="按项目类型筛选">
+        {
+          filters.map((filter, index) => (
+            <button
+              type="button"
+              data-filter={filter.value}
+              aria-pressed={index === 0 ? 'true' : 'false'}
+            >
+              {filter.label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="project-grid" aria-live="polite">
+      {
+        projects.map((project, index) => {
+          const Icon = icons[project.category];
+          return (
+            <article
+              class="project-card"
+              data-testid="project-card"
+              data-category={project.category}
+              style={`--project-accent:${project.accent}`}
+            >
+              <div class="project-visual" aria-hidden="true">
+                <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
+                <Icon size={38} stroke-width={1.35} />
+                <span class="project-grid-lines" />
+              </div>
+              <div class="project-card-body">
+                <div class="project-meta">
+                  <span>{project.categoryLabel}</span>
+                  <span class:list={{ 'status-open': project.status === '开放征集' }}>
+                    {project.status}
+                  </span>
+                </div>
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+                <dl>
+                  <div>
+                    <dt>硬件</dt>
+                    <dd>{project.hardware}</dd>
+                  </div>
+                  <div>
+                    <dt>框架</dt>
+                    <dd>{project.framework}</dd>
+                  </div>
+                  <div>
+                    <dt>许可</dt>
+                    <dd>{project.license}</dd>
+                  </div>
+                </dl>
+                <a href={project.repository}>
+                  {project.status === '可运行' ? '查看仓库' : '认领这个席位'}
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section class="submission-panel">
+    <div class="submission-icon" aria-hidden="true">
+      <GitPullRequestArrow size={31} />
+    </div>
+    <div>
+      <p class="eyebrow">ADD YOUR BUILD / 加入展示</p>
+      <h2>你的项目，也可以成为这里的一部分。</h2>
+      <p>
+        使用结构化 GitHub Issue 提交项目。维护者确认开源许可、硬件关系和基本资料后，
+        会把项目加入展示列表。
+      </p>
+    </div>
+    <a class="submission-button" href={submissionUrl}>
+      提交你的项目
+      <ArrowUpRight size={17} aria-hidden="true" />
+    </a>
+  </section>
+
+  <script>
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const projectCards = document.querySelectorAll<HTMLElement>('[data-category]');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selected = button.dataset.filter ?? 'all';
+
+        filterButtons.forEach((item) => {
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+
+        projectCards.forEach((card) => {
+          card.hidden = selected !== 'all' && card.dataset.category !== selected;
+        });
+      });
+    });
+  </script>
+</SiteLayout>
